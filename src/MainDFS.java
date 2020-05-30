@@ -1,55 +1,65 @@
-class LinkedList {
+class QuickSort
+{
 
-    static Node head;
-
-    static class Node {
-
-        int data;
-        Node next;
-
-        Node(int d)
+    int partition(int arr[], int low, int high)
+    {
+        int pivot = arr[high];
+        int i = (low-1);
+        for (int j=low; j<high; j++)
         {
-            data = d;
-            next = null;
+
+            if (arr[j] < pivot)
+            {
+                i++;
+
+
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+
+        int temp = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = temp;
+
+        return i+1;
+    }
+
+
+
+    void sort(int arr[], int low, int high)
+    {
+        if (low < high)
+        {
+
+            int pi = partition(arr, low, high);
+
+
+            sort(arr, low, pi-1);
+            sort(arr, pi+1, high);
         }
     }
 
-    Node reverse(Node node)
+    static void printArray(int arr[])
     {
-        Node prev = null;
-        Node current = node;
-        Node next = null;
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-        node = prev;
-        return node;
+        int n = arr.length;
+        for (int i=0; i<n; ++i)
+            System.out.print(arr[i]+" ");
+        System.out.println();
     }
 
-    void printList(Node node)
-    {
-        while (node != null) {
-            System.out.print(node.data + " ");
-            node = node.next;
-        }
-    }
 
-    public static void main(String[] args)
+    public static void main(String args[])
     {
-        LinkedList list = new LinkedList();
-        list.head = new Node(85);
-        list.head.next = new Node(15);
-        list.head.next.next = new Node(4);
-        list.head.next.next.next = new Node(20);
+        int arr[] = {10, 7, 8, 9, 1, 5};
+        int n = arr.length;
 
-        System.out.println("Given Linked list");
-        list.printList(head);
-        head = list.reverse(head);
-        System.out.println("");
-        System.out.println("Reversed linked list ");
-        list.printList(head);
+        QuickSort ob = new QuickSort();
+        ob.sort(arr, 0, n-1);
+
+        System.out.println("sorted array");
+        printArray(arr);
     }
 } 
